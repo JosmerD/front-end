@@ -1,0 +1,21 @@
+import { Component, OnInit, ɵCompiler_compileModuleAsync__POST_R3__ } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { generoCreacionDTO } from '../genero';
+
+
+@Component({
+  selector: 'app-crear-genero',
+  templateUrl: './crear-genero.component.html',
+  styleUrls: ['./crear-genero.component.css']
+})
+export class CrearGeneroComponent {
+
+  constructor(private router:Router) {}
+  
+  guardarCambios(genero:generoCreacionDTO){
+    console.log(genero);
+    this.router.navigate(['/generos'])
+  }
+
+}
