@@ -19,7 +19,7 @@ modelo: actorDTO;
 
 @Output()
 
-sudmit: EventEmitter<actorCreacionDTO> = new EventEmitter<actorCreacionDTO>();
+Onsudmit: EventEmitter<actorCreacionDTO> = new EventEmitter<actorCreacionDTO>();
 
 ngOnInit(): void {
     this.form=this.formBuilder.group({
@@ -30,7 +30,8 @@ ngOnInit(): void {
       },
     ],
       fechaNacimiento:'',
-      foto:''
+      foto:'',
+      biografia:''
     });
     if (this.modelo!==undefined) {
       this.form.patchValue(this.modelo);
@@ -42,8 +43,12 @@ archivoSeleccionado(file){
   }
 
   OnSubmit(){
-    
-    this.sudmit.emit(this.form.value);
+  
+    this.Onsudmit.emit(this.form.value);
+  }
+
+  cambioMarkdown(texto:string){
+    this.form.get('biografia').setValue(texto);
   }
 
 }

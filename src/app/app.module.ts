@@ -7,7 +7,11 @@ import { ListadoPeliculasComponent } from './pelicula/listado-peliculas/listado-
 import { ListadoGenericoComponent } from './utilidades/listado-generico/listado-generico.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
-
+import {MarkdownModule} from 'ngx-markdown'
+import {LeafletModule} from '@asymmetrik/ngx-leaflet'
+import 'leaflet/dist/images/marker-shadow.png';
+import 'leaflet/dist/images/marker-icon.png';
+import 'leaflet/dist/images/marker-icon-2x.png';
 import {MaterialModule} from './material/material.module';
 import { MenuComponent } from './menu/menu.component';
 import { RatingComponent } from './utilidades/rating/rating.component';
@@ -27,6 +31,10 @@ import {FormularioGeneroComponent} from './generos/formulario-genero/formulario-
 import { FiltroPeliculasComponent } from './peliculas/filtro-peliculas/filtro-peliculas.component';
 import { FormularioActoresComponent } from './actores/formulario-actores/formulario-actores.component';
 import { InputImgComponent } from './utilidades/input-img/input-img.component';
+import { InputMarkdonwComponent } from './utilidades/input-markdonw/input-markdonw.component';
+import { FormularioCineComponent } from './cines/formulario-cine/formulario-cine.component';
+import { MapaComponent } from './utilidades/mapa/mapa.component';
+import { FormularioPeliculaComponent } from './peliculas/formulario-pelicula/formulario-pelicula.component';
 
 
 @NgModule({
@@ -51,14 +59,21 @@ import { InputImgComponent } from './utilidades/input-img/input-img.component';
     FormularioGeneroComponent,
     FiltroPeliculasComponent,
     FormularioActoresComponent,
-    InputImgComponent
+    InputImgComponent,
+    InputMarkdonwComponent,
+    FormularioCineComponent,
+    MapaComponent,
+    FormularioPeliculaComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LeafletModule,
+    MarkdownModule.forRoot()
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

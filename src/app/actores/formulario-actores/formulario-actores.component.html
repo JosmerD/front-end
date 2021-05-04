@@ -12,7 +12,7 @@
     </mat-form-field>
 
     <app-input-img [urlImagenActual]="modelo?.foto" (archivoSeleccionado)="archivoSeleccionado($event)"></app-input-img>
-    
+    <app-input-markdonw [placeHolderTextarea]="'Biografia'" (changeMarkdown)="cambioMarkdown($event)"></app-input-markdonw>
     <div>
         <button mat-flat-button color="primary" [disabled]="form.invalid">Guardar Cambios</button>
         <a mat-stroked-button routerLink="/actores">Cancelar</a>
