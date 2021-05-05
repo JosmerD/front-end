@@ -1,32 +1,48 @@
 <form (submit)="guardarCambios()" [formGroup]="form">
-    <mat-form-field appearance="outline">
-        <mat-label>Titulo</mat-label>
-        <input formControlName="titulo" matInput/>
-        <mat-error *ngIf="form.invalid">El campos Titulo es Requerido</mat-error>
-    </mat-form-field>
-        <div class="contenedor-checkbox">
-            <mat-checkbox formControlName="enCines">En Cines</mat-checkbox>
-        </div>       
-
         <mat-form-field appearance="outline">
-            <mat-label>Trailer</mat-label>
-            <input formControlName="trailer" matInput/>           
+            <mat-label>Titulo</mat-label>
+            <input formControlName="titulo" matInput/>
+            <mat-error *ngIf="form.invalid">El campos Titulo es Requerido</mat-error>
         </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Fecha Lanzamiento</mat-label>
-            <input formControlName="fechaLanzamiento" matInput [matDatepicker]="picker"/>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+            <div class="contenedor-checkbox">
+                <mat-checkbox formControlName="enCines">En Cines</mat-checkbox>
+            </div>       
 
-   <h4>Seleccionar Poster</h4>
-   <app-input-img [urlImagenActual]="modelo?.poster" (archivoSeleccionado)="archivoSeleccionado($event)"></app-input-img>
-  
-   <h4>Rsumen de la Pelicula</h4>
-   <app-input-markdonw [contenidoMarkdown]="modelo?.resumen" (changeMarkdown)="changeMarkdown($event)" [placeHolderTextarea]="'Resumen'"></app-input-markdonw>
-    <div>
-        <button mat-flat-button color="primary" [disabled]="form.invalid">Guardar Cambios</button>
-        <a mat-stroked-button routerLink="/">Cancelar</a>
-    </div>
+            <mat-form-field appearance="outline">
+                <mat-label>Trailer</mat-label>
+                <input formControlName="trailer" matInput/>           
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Fecha Lanzamiento</mat-label>
+                <input formControlName="fechaLanzamiento" matInput [matDatepicker]="picker"/>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+    <h4>Seleccionar Poster</h4>
+    <app-input-img [urlImagenActual]="modelo?.poster" (archivoSeleccionado)="archivoSeleccionado($event)"></app-input-img>
+    
+    <h4>Rsumen de la Pelicula</h4>
+    <app-input-markdonw [contenidoMarkdown]="modelo?.resumen" (changeMarkdown)="changeMarkdown($event)" [placeHolderTextarea]="'Resumen'"></app-input-markdonw>
+        
+    <h4>Seleccione los generos</h4>
+    <app-selector-multiple 
+    [Seleccionados]="generosSeleccionados"
+    [NoSeleccionados]="generosNoSeleccionados">
+    </app-selector-multiple>
+
+    <h4>Seleccione cines</h4>
+        <app-selector-multiple 
+        [Seleccionados]="cinesSeleccionados"
+        [NoSeleccionados]="cinesNoSeleccionados">
+        </app-selector-multiple>
+
+    <h4>Seleccione actores</h4>
+        <app-autocomplete-actores></app-autocomplete-actores>
+    
+        <div>
+            <button mat-flat-button color="primary" [disabled]="form.invalid">Guardar Cambios</button>
+            <a mat-stroked-button routerLink="/">Cancelar</a>
+        </div>
 </form>
 

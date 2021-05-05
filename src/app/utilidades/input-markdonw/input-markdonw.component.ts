@@ -22,9 +22,5 @@ export class InputMarkdonwComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  inputTextArea(texto:string){
-    
-    this.contenidoMarkdown=texto;
-    this.changeMarkdown.emit(texto);
-  }
+
 }
