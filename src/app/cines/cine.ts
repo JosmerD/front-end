@@ -1,10 +1,11 @@
 export interface  cineCreacionDTO{
     nombre:string;
-    latidud:number;
+    latitud:number;
     longitud:number;
 }
 export interface cineDTO{
+    id:number;
     nombre:string;
-    latidud:number;
+    latitud:number;
     longitud:number;
 }

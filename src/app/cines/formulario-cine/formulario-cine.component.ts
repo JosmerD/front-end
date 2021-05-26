@@ -16,6 +16,8 @@ export class FormularioCineComponent implements OnInit {
   @Input()
   modelo: cineCreacionDTO;
   //coordenada: Coordenadas;
+  @Input()
+  errores:string[]=[];
   @Output()
   guardarCambios: EventEmitter<cineCreacionDTO> = new  EventEmitter<cineCreacionDTO>();
   coordenadaInicial: Coordenadas[]=[];
@@ -45,7 +47,7 @@ export class FormularioCineComponent implements OnInit {
 
     if (this.modelo!==undefined) {
       this.form.patchValue(this.modelo);
-      this.coordenadaInicial.push({latitud:this.modelo.latidud,longitud:this.modelo.longitud});
+      this.coordenadaInicial.push({latitud:this.modelo.latitud,longitud:this.modelo.longitud});
     }
   }
 

@@ -10,11 +10,12 @@ import { actorCreacionDTO, actorDTO } from '../actor';
 export class FormularioActoresComponent implements OnInit {
 
   constructor(private formBuilder:FormBuilder) { }
+imagenCambiada = false;
 
 form:FormGroup;
-
 @Input()
-
+errores:string[]=[];
+@Input()
 modelo: actorDTO;
 
 @Output()
@@ -39,11 +40,14 @@ ngOnInit(): void {
   }
 
 archivoSeleccionado(file){
+  this.imagenCambiada=true;
     this.form.get('foto').setValue(file);
   }
 
   OnSubmit(){
-  
+    if(!this.imagenCambiada){
+      this.form.patchValue({'foto':null});
+    }
     this.Onsudmit.emit(this.form.value);
   }
 

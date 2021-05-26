@@ -10,6 +10,7 @@
 <div *ngIf="listado?.length===0">
     <span #vacio>
         <ng-content select="[vacio]"></ng-content>
+       
     </span>
     <span *ngIf="!vacio.innerHTML.trim()">
         <p>No hay pelicula para mostrar</p>

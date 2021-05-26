@@ -1,3 +1,5 @@
+<app-mostrar-errores [errores]="errores"></app-mostrar-errores>
+
 <form (submit)="OnSubmit()" [formGroup]="form">
     <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
@@ -12,7 +14,7 @@
     </mat-form-field>
 
     <app-input-img [urlImagenActual]="modelo?.foto" (archivoSeleccionado)="archivoSeleccionado($event)"></app-input-img>
-    <app-input-markdonw [placeHolderTextarea]="'Biografia'" (changeMarkdown)="cambioMarkdown($event)"></app-input-markdonw>
+    <app-input-markdonw [contenidoMarkdown]="modelo?.biografia" [placeHolderTextarea]="'Biografia'" (changeMarkdown)="cambioMarkdown($event)"></app-input-markdonw>
     <div>
         <button mat-flat-button color="primary" [disabled]="form.invalid">Guardar Cambios</button>
         <a mat-stroked-button routerLink="/actores">Cancelar</a>

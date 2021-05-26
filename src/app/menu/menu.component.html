@@ -11,17 +11,33 @@
         </a>
         
     </div>
-    
-    <div>
-        <a mat-button routerLink="generos">Generos</a>
+    <app-autorizado [rol]="'admin'">
+        <ng-container autorizado>                    
+            <div>
+                <a mat-button routerLink="generos">Generos</a>
+            </div>
+            <div>
+                <a mat-button routerLink="actores">Actores</a>
+            </div>
+            <div>
+                <a mat-button routerLink="cines">Cines</a>
+            </div>
+            <div>
+                <a mat-button routerLink="peliculas/crear">Crear Peliculas</a>
+            </div>
+        </ng-container>
+    </app-autorizado>
+    <div class="espacio">
+
     </div>
-    <div>
-        <a mat-button routerLink="actores">Actores</a>
-    </div>
-    <div>
-        <a mat-button routerLink="cines">Cines</a>
-    </div>
-    <div>
-        <a mat-button routerLink="peliculas/crear">Crear Peliculas</a>
-    </div>
+    <app-autorizado>
+        <ng-container autorizado>    
+            <span>Hola, {{seguridadServices.obtenerCampoJWT('email')}}</span>
+            <a mat-button (click)="seguridadServices.logout()">Logout</a>
+        </ng-container>
+        <ng-container noAutorizado> 
+            <a mat-button routerLink="login">Login</a>   
+            <a mat-button routerLink="registro">Registro</a>   
+        </ng-container>
+    </app-autorizado>   
 </mat-toolbar>

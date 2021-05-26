@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import{Location} from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { GenerosService } from 'src/app/generos/generos.service';
+import { PeliculasService } from '../peliculas.service';
+import { generoDTO } from 'src/app/generos/genero';
+import { peliculaDTO } from '../pelicula';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-filtro-peliculas',
@@ -11,38 +16,16 @@ import { ActivatedRoute } from '@angular/router';
 export class FiltroPeliculasComponent implements OnInit {
 
   constructor(private formBuilder:FormBuilder, private locaction: Location,
-    private activaredRoute:ActivatedRoute) { }
-form:FormGroup;
-generos=[
-  {id:1,nombre:'Drama'},
-  {id:2,nombre:'Accion'},
-  {id:3,nombre:'Comedia'}
-]
-peliculas =[
-  {
-    titulo:'Spider-Man',
-    enCines:true,
-    proximosEstrenos:false,
-    generos:[2],
-    poster:'https://m.media-amazon.com/images/M/MV5BMGZlNTY1ZWUtYTMzNC00ZjUyLWE0MjQtMTMxN2E3ODYxMWVmXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'
-  },
-  {
-    titulo:'Moana',
-    enCines:false,
-    proximosEstrenos:true,
-    generos:[2,3],
-    poster:'https://m.media-amazon.com/images/M/MV5BMjI4MzU5NTExNF5BMl5BanBnXkFtZTgwNzY1MTEwMDI@._V1_UX182_CR0,0,182,268_AL_.jpg'
-  },
-  {
-    titulo:'Avengers',
-    enCines:false,
-    proximosEstrenos:false,
-    generos:[1,3],
-    poster:'https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg'
-  }
+    private activaredRoute:ActivatedRoute,private generosServices:GenerosService,private peliculasServices:PeliculasService) { }
 
-]
-peliculasOriginal=this.peliculas;
+    form:FormGroup;
+
+    generos:generoDTO[]=[];
+paginaActual=1;
+cantidadElementosAMostrar=10;
+cantidadElementos;
+peliculas :peliculaDTO[];
+//peliculasOriginal=this.peliculas;
 
 formularioOriginal={
   titulo:'',
@@ -52,15 +35,23 @@ formularioOriginal={
 
 };
   ngOnInit(): void {
-    this.form=this.formBuilder.group(this.formularioOriginal);
-    this.leerValoresURL();
-    this.buscarPeliculas(this.form.value);
-    this.form.valueChanges
-    .subscribe(valores=>{
-      this.peliculas=this.peliculasOriginal;
-      this.buscarPeliculas(valores);
-      this.escribirParametrosBusquedaEnURL();
+    
+    this.generosServices.obtenerTodos()
+    .subscribe(generos=>{
+      this.generos=generos;
+
+      this.form=this.formBuilder.group(this.formularioOriginal);
+      this.leerValoresURL();
+      this.buscarPeliculas(this.form.value);
+      this.form.valueChanges
+      .subscribe(valores=>{
+        
+        this.buscarPeliculas(valores);
+        this.escribirParametrosBusquedaEnURL();
+      });
+
     });
+
   }
   private leerValoresURL(){
     this.activaredRoute.queryParams.subscribe((params)=>{
@@ -106,22 +97,24 @@ formularioOriginal={
     this.locaction.replaceState('peliculas/buscar',queryStrings.join('&'));
   }
   buscarPeliculas(valores:any){
-    if(valores.titulo){
-      this.peliculas=this.peliculas.filter(pelicula=>pelicula.titulo.indexOf(valores.titulo)!==-1);
-    }
-    if(valores.generoId){
-      this.peliculas=this.peliculas.filter(pelicula=>pelicula.generos.indexOf(valores.generoId)!==-1);
-    }
-    if(valores.proximosEstrenos){
-      this.peliculas=this.peliculas.filter(pelicula=>pelicula.proximosEstrenos);
-    }
-    if(valores.enCines){
-      this.peliculas=this.peliculas.filter(pelicula=>pelicula.enCines);
-    }
+    valores.pagina=this.paginaActual;
+    valores.recordsPorPagina=this.cantidadElementosAMostrar;
+
+    this.peliculasServices.filtrar(valores).subscribe(response=>{
+      this.peliculas=response.body;
+      this.escribirParametrosBusquedaEnURL();
+      this.cantidadElementos=response.headers.get('cantidadTotalRegistros');
+    })
 
   }
   limpiar(){
     this.form.patchValue(this.formularioOriginal);
+  }
+
+  paginatorUpdate(datos:PageEvent){
+    this.paginaActual = datos.pageIndex +1;
+    this.cantidadElementosAMostrar=datos.pageSize;
+    this.buscarPeliculas(this.form.value);
   }
 
 }
