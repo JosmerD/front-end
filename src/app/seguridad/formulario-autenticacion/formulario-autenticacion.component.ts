@@ -42,11 +42,12 @@ export class FormularioAutenticacionComponent implements OnInit {
 
   }
 
+
   obtenerMensajeErrorEmail(){
     var campo = this.form.get('email');
     if (campo.hasError('required')) {
 
-      return 'El campo Email es requerido';
+      return 'El campo Email es Requerido';
       
     }
     if (campo.hasError('email')) {
