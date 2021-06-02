@@ -5,11 +5,11 @@
     <ng-container contenido>
         <div class="peliculas-contenedor">
             <div *ngFor="let pelicula of pelicula; let index=index" class="pelicula-contenedor">
-                <a [routerLink]="'/pelicula/'+pelicula.id">
+                <a [routerLink]="'/peliculas/editar/'+pelicula.id">
                     <img [src]="pelicula.poster" alt ="Poster"/>
                 </a>
                 <p>
-                    <a [routerLink]="'/pelicula/'+pelicula.id">{{pelicula.titulo}}</a>
+                    <a [routerLink]="'/peliculas/editar/'+pelicula.id">{{pelicula.titulo}}</a>
                 </p>
                 <app-autorizado [rol]="'admin'">
                     <ng-container autorizado>
